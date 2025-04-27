@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaCrown, FaGamepad, FaBook, FaUserAlt, FaCode, FaEnvelope, FaPaintBrush, FaTwitch, 
          FaChevronLeft, FaChevronRight, FaBookOpen, FaComments, FaInstagram, FaYoutube,
-         FaPhone, FaMapMarkerAlt, FaSun, FaMoon, FaTimes, FaTools, FaCalendar } from 'react-icons/fa';
+         FaPhone, FaMapMarkerAlt, FaTimes, FaTools, FaCalendar } from 'react-icons/fa';
 import SpaceGame from './components/SpaceGame';
 
 function App() {
@@ -11,7 +11,6 @@ function App() {
   const [isReading, setIsReading] = useState(false);
   const [currentChapter, setCurrentChapter] = useState(0);
   const [showComments, setShowComments] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
   
   // Contact form state
   const [formData, setFormData] = useState({
@@ -30,19 +29,6 @@ function App() {
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Theme toggle effect
-  useEffect(() => {
-    if (!isDarkMode) {
-      document.body.classList.add('light');
-    } else {
-      document.body.classList.remove('light');
-    }
-  }, [isDarkMode]);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
 
   // Form validation
   const validateField = (name, value) => {
@@ -1004,65 +990,26 @@ function App() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Starfield Background */}
-      <div className="starfield" />
-
-      {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-sm py-2' : 'bg-transparent py-4'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Header */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-black/80 backdrop-blur-sm py-2' : 'bg-transparent py-4'
+      }`}>
+        <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
-            {/* Logo */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex items-center space-x-2"
-            >
-              <FaCrown className="text-red-600 text-3xl" />
-              <span className="text-2xl font-bold pixel-text">KINGPLAY</span>
-            </motion.div>
-            
-            {/* Navigation Links and Theme Toggle */}
-            <div className="hidden md:flex items-center space-x-8">
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex items-center space-x-8"
-              >
-                <a href="#inicio" className="nav-link pixel-text text-sm">Inicio</a>
-                <a href="#sobre-mi" className="nav-link pixel-text text-sm">Sobre Mí</a>
-                <a href="#portfolio" className="nav-link pixel-text text-sm">Portfolio</a>
-                <a href="#novela" className="nav-link pixel-text text-sm">Novela</a>
-                <a href="#libro" className="nav-link pixel-text text-sm">Libro</a>
-                <a href="#contacto" className="nav-link pixel-text text-sm">Contacto</a>
-                
-                {/* Theme Toggle */}
-                <motion.div
-                  className="theme-toggle"
-                  onClick={toggleTheme}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <div className="theme-toggle-track" />
-                  <motion.div 
-                    className="theme-toggle-thumb"
-                    animate={{ 
-                      x: isDarkMode ? 0 : 40,
-                      rotate: isDarkMode ? 0 : 360
-                    }}
-                  >
-                    {isDarkMode ? (
-                      <FaMoon className="theme-toggle-icon" />
-                    ) : (
-                      <FaSun className="theme-toggle-icon" />
-                    )}
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-            </div>
+            <a href="#" className="text-2xl font-bold pixel-text text-red-500">KINGPLAY</a>
+            <nav className="hidden md:flex space-x-8">
+              <a href="#inicio" className="nav-link pixel-text text-sm">Inicio</a>
+              <a href="#portfolio" className="nav-link pixel-text text-sm">Portfolio</a>
+              <a href="#novela" className="nav-link pixel-text text-sm">Novela</a>
+              <a href="#libro" className="nav-link pixel-text text-sm">Libro</a>
+              <a href="#contacto" className="nav-link pixel-text text-sm">Contacto</a>
+            </nav>
           </div>
         </div>
-      </nav>
+      </header>
+
+      {/* Starfield Background */}
+      <div className="starfield" />
 
       {/* Hero Section */}
       <section id="inicio" className="min-h-screen relative overflow-hidden pixel-bg pt-16">
@@ -1587,6 +1534,7 @@ function App() {
           {/* Info */}
           <div className="w-full md:w-2/3 flex flex-col justify-center">
             <h3 className="text-4xl font-bold pixel-text text-red-500 mb-2">EL DESPERTAR DE LAS ALMAS</h3>
+            <p className="text-white text-lg mb-4">Próximamente</p>
             <div className="text-gray-200 text-base mb-6">
               <h4 className="font-bold text-red-500 mb-2">Sinopsis</h4>
               <p>

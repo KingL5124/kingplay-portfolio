@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaCrown } from 'react-icons/fa';
-import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import { useTheme } from '../../contexts/ThemeContext';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { isDarkMode, toggleTheme } = useTheme();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -56,20 +53,6 @@ const Header = () => {
               </motion.a>
             ))}
           </nav>
-
-          {/* Theme Toggle */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={toggleTheme}
-            className="p-2 rounded-lg bg-red-600 hover:bg-red-500 transition-colors"
-          >
-            {isDarkMode ? (
-              <MdLightMode className="text-xl" />
-            ) : (
-              <MdDarkMode className="text-xl" />
-            )}
-          </motion.button>
         </div>
       </div>
     </motion.header>
