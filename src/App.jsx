@@ -4,6 +4,23 @@ import { FaCrown, FaGamepad, FaBook, FaUserAlt, FaCode, FaEnvelope, FaPaintBrush
          FaChevronLeft, FaChevronRight, FaBookOpen, FaComments, FaInstagram, FaYoutube,
          FaPhone, FaMapMarkerAlt, FaTimes, FaTools, FaCalendar } from 'react-icons/fa';
 import SpaceGame from './components/SpaceGame';
+import portadaNovela from './assets/images/novela/portada.png';
+import portadaLibro from './assets/images/book/Portada_Libro.png';
+import tarjeta1 from './assets/images/portfolio/tarjeta/Tarjeta 01.png';
+import tarjeta2 from './assets/images/portfolio/tarjeta/Tarjeta 02.png';
+import escenario1 from './assets/images/portfolio/escenario/Escenario 01.jpg';
+import personaje1 from './assets/images/portfolio/personaje/Personaje 01.png';
+import logo1 from './assets/images/portfolio/logotipos/Logo1.png';
+import logo2 from './assets/images/portfolio/logotipos/Logo2.png';
+import logo3 from './assets/images/portfolio/logotipos/Logo3.png';
+import logo4 from './assets/images/portfolio/logotipos/Logo4.png';
+import portada1 from './assets/images/portfolio/portada/Portada.png';
+import retrato1 from './assets/images/portfolio/retratos/retrato1.jpg';
+import retrato2 from './assets/images/portfolio/retratos/retrato2.png';
+import paisaje1 from './assets/images/portfolio/paisaje/Paisaje 01.png';
+import tropipanLogotipo from './assets/images/portfolio/producto/Tropipan_logotipo.png';
+import productoPDF from './assets/images/portfolio/producto/Producto 01.pdf';
+import profilePhoto from './assets/images/profile/profile-photo.png';
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -119,7 +136,7 @@ function App() {
       id: 'tarjeta-1',
       title: 'Mi Tarjeta de Presentación 1',
       category: 'tarjeta',
-      image: '/images/portfolio/tarjeta/Tarjeta 01.png',
+      image: tarjeta1,
       description: 'Diseño de tarjeta de presentación personal',
       details: {
         fecha: '2024',
@@ -131,7 +148,7 @@ function App() {
       id: 'tarjeta-2',
       title: 'Mi Tarjeta de Presentación 2',
       category: 'tarjeta',
-      image: '/images/portfolio/tarjeta/Tarjeta 02.png',
+      image: tarjeta2,
       description: 'Diseño alternativo de tarjeta de presentación',
       details: {
         fecha: '2024',
@@ -144,7 +161,7 @@ function App() {
       id: 'escenario-1',
       title: 'Escenario Semi-Realista',
       category: 'escenario',
-      image: '/images/portfolio/escenario/Escenario 01.jpg',
+      image: escenario1,
       description: 'Escenario 2D con iluminación semi-realista',
       details: {
         fecha: '2024',
@@ -157,7 +174,7 @@ function App() {
       id: 'personaje-1',
       title: 'Personaje Estilo Blue Lock',
       category: 'personaje',
-      image: '/images/portfolio/personaje/Personaje 01.png',
+      image: personaje1,
       description: 'Diseño de personaje inspirado en Blue Lock',
       details: {
         fecha: '2024',
@@ -170,7 +187,7 @@ function App() {
       id: 'logo-1',
       title: 'Logo Canal Gaming',
       category: 'logotipos',
-      image: '/images/portfolio/logotipos/Logo1.png',
+      image: logo1,
       description: 'Diseño de logo para canal de gaming',
       details: {
         fecha: '2024',
@@ -182,7 +199,7 @@ function App() {
       id: 'logo-2',
       title: 'Logo Gaming Alternativo',
       category: 'logotipos',
-      image: '/images/portfolio/logotipos/Logo2.png',
+      image: logo2,
       description: 'Segundo diseño para canal gaming',
       details: {
         fecha: '2024',
@@ -194,7 +211,7 @@ function App() {
       id: 'logo-3',
       title: 'Logo Canal Podcast',
       category: 'logotipos',
-      image: '/images/portfolio/logotipos/Logo3.png',
+      image: logo3,
       description: 'Diseño de logo para canal de podcast',
       details: {
         fecha: '2024',
@@ -206,7 +223,7 @@ function App() {
       id: 'logo-4',
       title: 'Logo Equipo EA',
       category: 'logotipos',
-      image: '/images/portfolio/logotipos/Logo4.png',
+      image: logo4,
       description: 'Diseño de logo para equipo de EA',
       details: {
         fecha: '2024',
@@ -219,7 +236,7 @@ function App() {
       id: 'portada-1',
       title: 'Diseño de Portada',
       category: 'portada',
-      image: '/images/portfolio/portada/Portada.png',
+      image: portada1,
       description: 'Diseño de portada para contenido digital',
       details: {
         fecha: '2024',
@@ -232,7 +249,7 @@ function App() {
       id: 'retrato-1',
       title: 'Retrato Femenino',
       category: 'retratos',
-      image: '/images/portfolio/retratos/retrato1.jpg',
+      image: retrato1,
       description: 'Retrato digital de personaje femenino',
       details: {
         fecha: '2024',
@@ -244,7 +261,7 @@ function App() {
       id: 'retrato-2',
       title: 'Retrato Masculino',
       category: 'retratos',
-      image: '/images/portfolio/retratos/retrato2.png',
+      image: retrato2,
       description: 'Retrato digital de personaje masculino',
       details: {
         fecha: '2024',
@@ -257,7 +274,7 @@ function App() {
       id: 'paisaje-1',
       title: 'Bosque Fantástico',
       category: 'paisaje',
-      image: '/images/portfolio/paisaje/Paisaje 01.png',
+      image: paisaje1,
       description: 'Ilustración de bosque con elementos fantásticos',
       details: {
         fecha: '2024',
@@ -270,8 +287,8 @@ function App() {
       id: 'producto-1',
       title: 'Diseño de Producto - Fruta Pan',
       category: 'producto',
-      image: '/images/portfolio/producto/Tropipan_logotipo.png',
-      pdfFile: '/images/portfolio/producto/Producto 01.pdf',
+      image: tropipanLogotipo,
+      pdfFile: productoPDF,
       description: 'Diseño de producto para Fruta Pan Isleña',
       details: {
         fecha: '2025',
@@ -283,7 +300,7 @@ function App() {
       id: 'retratos-1',
       title: 'Retrato Simple 1',
       category: 'retratos',
-      image: '/images/portfolio/retratos/retrato1.jpg',
+      image: retrato1,
       description: 'Retrato digital de personaje femenino',
       details: {
         fecha: '2024',
@@ -1137,7 +1154,7 @@ function App() {
                 <div>
                   <div className="flex items-start space-x-4">
                     <img
-                      src="/images/portfolio/kingplay-portfolio/public/images/profile/profile-photo.png"
+                      src={profilePhoto}
                       alt="Profile"
                       className="w-24 h-24 rounded-full border-2 border-red-500"
                     />
@@ -1471,7 +1488,7 @@ function App() {
             >
               <div className="novel-cover mb-6">
                 <img
-                  src="/images/portfolio/novela/portada.png"
+                  src={portadaNovela}
                   alt="Portada de la Novela"
                   className="w-full h-full object-cover rounded-lg shadow-lg shadow-red-500/20"
                 />
@@ -1524,7 +1541,7 @@ function App() {
           {/* Portada */}
           <div className="w-full md:w-1/3 flex items-center justify-center">
             <img
-              src="/src/assets/images/book/Portada Libro.png"
+              src={portadaLibro}
               alt="Portada EL DESPERTAR DE LAS ALMAS"
               className="object-cover w-full h-72 max-w-xs rounded-lg shadow-lg"
             />
