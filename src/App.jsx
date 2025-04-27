@@ -1524,11 +1524,9 @@ function App() {
           {/* Portada */}
           <div className="w-full md:w-1/3 flex items-center justify-center">
             <img
-              src="/images/portfolio/libro/portada.png"
+              src="/src/assets/images/book/Portada Libro.png"
               alt="Portada EL DESPERTAR DE LAS ALMAS"
               className="object-cover w-full h-72 max-w-xs rounded-lg shadow-lg"
-              style={{ background: '#222', objectFit: 'cover' }}
-              onError={e => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/240x320?text=Portada'; }}
             />
           </div>
           {/* Info */}
