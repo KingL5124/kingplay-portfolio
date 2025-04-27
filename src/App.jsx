@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaCrown, FaGamepad, FaBook, FaUserAlt, FaCode, FaEnvelope, FaPaintBrush, FaTwitch, 
          FaChevronLeft, FaChevronRight, FaBookOpen, FaComments, FaInstagram, FaYoutube,
          FaPhone, FaMapMarkerAlt, FaSun, FaMoon, FaTimes, FaTools, FaCalendar } from 'react-icons/fa';
+import SpaceGame from './components/SpaceGame';
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -123,6 +124,7 @@ function App() {
     { id: 'portada', name: 'Diseño de Portada' },
     { id: 'retratos', name: 'Retratos Simples' },
     { id: 'paisaje', name: 'Paisaje en 2D' },
+    { id: 'producto', name: 'Diseño de Producto' },
   ];
 
   const projects = [
@@ -275,6 +277,32 @@ function App() {
         fecha: '2024',
         herramientas: ['Illustrator'],
         descripcionLarga: 'Ilustración de un bosque fantástico creado exclusivamente en Illustrator, combinando elementos naturales con toques mágicos y fantásticos.'
+      }
+    },
+    // Producto
+    {
+      id: 'producto-1',
+      title: 'Diseño de Producto - Fruta Pan',
+      category: 'producto',
+      image: '/images/portfolio/producto/Tropipan_logotipo.png',
+      pdfFile: '/images/portfolio/producto/Producto 01.pdf',
+      description: 'Diseño de producto para Fruta Pan Isleña',
+      details: {
+        fecha: '2025',
+        herramientas: ['Adobe Illustrator', 'Adobe Photoshop'],
+        descripcionLarga: 'Diseño de producto creado por Alexis y King para la Fruta Pan Isleña, utilizando Adobe Illustrator y Photoshop para crear una identidad visual única y atractiva que representa la esencia de este producto tradicional.'
+      }
+    },
+    {
+      id: 'retratos-1',
+      title: 'Retrato Simple 1',
+      category: 'retratos',
+      image: '/images/portfolio/retratos/retrato1.jpg',
+      description: 'Retrato digital de personaje femenino',
+      details: {
+        fecha: '2024',
+        herramientas: ['Illustrator'],
+        descripcionLarga: 'Retrato digital de una chica creado exclusivamente en Illustrator, enfocado en capturar la esencia del personaje con un estilo vectorial.'
       }
     }
   ];
@@ -902,77 +930,75 @@ function App() {
 
   // Project Modal Component
   const ProjectModal = ({ project }) => {
-    if (!project) return null;
+    const isImagePDF = project.pdfFile?.toLowerCase().endsWith('.pdf');
 
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
-        onClick={closeModal}
-      >
-        <motion.div
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.5, opacity: 0 }}
-          className="relative max-w-[90vw] max-h-[90vh] w-full bg-black pixel-border p-6 rounded-lg overflow-y-auto"
-          onClick={e => e.stopPropagation()}
-        >
-          {/* Close Button */}
-          <button
-            onClick={closeModal}
-            className="absolute top-4 right-4 text-red-500 hover:text-red-600 transition-colors z-10"
-          >
-            <FaTimes className="text-2xl" />
-          </button>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Image Section */}
-            <div className="relative w-full h-full flex items-center justify-center">
-              <img
-                src={project.image}
-                alt={project.title}
-                className={`w-full h-auto object-contain ${
-                  project.category === 'retratos' ? 'max-h-none' : 'max-h-[60vh]'
-                }`}
-              />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80">
+        <div className="bg-[#1a1a1a] rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-2xl font-bold text-red-500">{project.title}</h3>
+              <button
+                onClick={closeModal}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <FaTimes size={24} />
+              </button>
             </div>
 
-            {/* Content Section */}
+            {/* Image Section */}
+            <div className="mb-6">
+              {isImagePDF ? (
+                <object
+                  data={project.pdfFile}
+                  type="application/pdf"
+                  width="100%"
+                  height="600px"
+                  className="rounded-lg"
+                >
+                  <p>Tu navegador no puede mostrar el PDF directamente. 
+                    <a href={project.pdfFile} target="_blank" rel="noopener noreferrer" 
+                       className="text-red-500 hover:text-red-400 ml-2">
+                      Haz clic aquí para verlo
+                    </a>
+                  </p>
+                </object>
+              ) : (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-auto rounded-lg"
+                />
+              )}
+            </div>
+
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold pixel-text text-red-500">{project.title}</h3>
+              <p className="text-gray-300">{project.description}</p>
               
-              {/* Project Details */}
-              <div className="space-y-4">
-                <div className="flex items-center space-x-2 text-gray-300">
-                  <FaCalendar className="text-red-500" />
-                  <span>{project.details.fecha}</span>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <FaTools className="text-red-500" />
-                    <span className="text-gray-300">Herramientas:</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.details.herramientas.map((tool, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 bg-red-500/10 text-red-500 rounded-md text-sm"
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <p className="text-gray-300">{project.details.descripcionLarga}</p>
+              <div className="flex items-center space-x-2 text-sm text-gray-400">
+                <FaCalendar />
+                <span>{project.details.fecha}</span>
               </div>
+              
+              <div className="flex items-center space-x-2">
+                <FaTools className="text-gray-400" />
+                <div className="flex flex-wrap gap-2">
+                  {project.details.herramientas.map((tool, index) => (
+                    <span
+                      key={index}
+                      className="bg-red-500 text-white px-2 py-1 rounded-full text-sm"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              
+              <p className="text-gray-300">{project.details.descripcionLarga}</p>
             </div>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     );
   };
 
@@ -1007,6 +1033,7 @@ function App() {
                 <a href="#sobre-mi" className="nav-link pixel-text text-sm">Sobre Mí</a>
                 <a href="#portfolio" className="nav-link pixel-text text-sm">Portfolio</a>
                 <a href="#novela" className="nav-link pixel-text text-sm">Novela</a>
+                <a href="#libro" className="nav-link pixel-text text-sm">Libro</a>
                 <a href="#contacto" className="nav-link pixel-text text-sm">Contacto</a>
                 
                 {/* Theme Toggle */}
@@ -1074,29 +1101,38 @@ function App() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="flex flex-col sm:flex-row justify-center gap-6"
+              className="flex flex-col items-center gap-8"
             >
-              <a href="#portfolio" className="pixel-button text-lg">
-                Ver Portfolio
-              </a>
-              <a href="#novela" className="pixel-button text-lg">
-                Leer Novela
-              </a>
+              <div className="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="#portfolio" className="pixel-button text-lg">
+                  Ver Portfolio
+                </a>
+                <a href="#novela" className="pixel-button text-lg">
+                  Leer Novela
+                </a>
+              </div>
             </motion.div>
+          </div>
+        </div>
+
+        {/* Game Section */}
+        <div className="relative w-full mt-32 mb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="text-center mb-8"
+            >
+              <h2 className="text-3xl font-bold pixel-text text-red-500 mb-4">¡Juega Ahora!</h2>
+              <p className="text-lg text-white/80">Demuestra tus habilidades en este juego espacial retro</p>
+            </motion.div>
+            <SpaceGame />
           </div>
         </div>
 
         {/* Decorative Elements */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent" />
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="text-white/50"
-          >
-            <FaGamepad className="text-3xl" />
-          </motion.div>
-        </div>
       </section>
 
       {/* Sobre Mí Section */}
@@ -1141,12 +1177,116 @@ function App() {
               Vengo de San Andrés Islas, soy detallista, observador y incluso muy expresador en ocasiones
             </motion.p>
 
+            {/* CV Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="bg-[#2D0909] rounded-lg p-8 mt-8 pixel-border"
+            >
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Left Column */}
+                <div>
+                  <div className="flex items-start space-x-4">
+                    <img
+                      src="/images/portfolio/kingplay-portfolio/public/images/profile/profile-photo.png"
+                      alt="Profile"
+                      className="w-24 h-24 rounded-full border-2 border-red-500"
+                    />
+                    <div>
+                      <h3 className="text-2xl font-bold text-red-500 pixel-text">CURRÍCULUM VITAE</h3>
+                      <h4 className="text-xl text-white mt-2">KING IVERSON</h4>
+                      <h4 className="text-xl text-white">LIVINGSTON</h4>
+                      <h4 className="text-xl text-white">HOGISTE</h4>
+                    </div>
+                  </div>
+
+                  <div className="mt-8">
+                    <h4 className="text-lg font-bold text-red-500 mb-4">PERFIL LABORAL</h4>
+                    <p className="text-white text-sm leading-relaxed">
+                      SOY UN CHICO APASIONADO POR TODO LO TEMÁTICO A VIDEOJUEGOS O INCLUSO EN LA CREACIÓN DE HISTORIAS HACIENDO QUE CUANDO LLEVO UN TRABAJO DE ESTA TEMÁTICA CADA DETALLE QUE HAGO ME EMOCIONE Y BIEN EN ELLO INCLUSO EN PEDIR LA OPINIÓN DE PERSONAS MÁS EXPERIMENTADAS PARA LLEVARLO A UN NIVEL MAYOR
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div>
+                  <div>
+                    <h4 className="text-lg font-bold text-red-500 mb-4">EXPERIENCIA LABORAL</h4>
+                    <p className="text-white">NINGUNA</p>
+                  </div>
+
+                  <div className="mt-8">
+                    <h4 className="text-lg font-bold text-red-500 mb-4">EDUCACIÓN</h4>
+                    <p className="text-white">FUNDACIÓN UNIVERSITARIA BELLAS ARTES</p>
+                  </div>
+
+                  <div className="mt-8">
+                    <h4 className="text-lg font-bold text-red-500 mb-4">HABILIDADES</h4>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-white mb-2">Drawing</p>
+                        <div className="flex space-x-1">
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-white mb-2">Web design</p>
+                        <div className="flex space-x-1">
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-white mb-2">Modelating 3D</p>
+                        <div className="flex space-x-1">
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-white mb-2">Interactive design</p>
+                        <div className="flex space-x-1">
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-white mb-2">Animation</p>
+                        <div className="flex space-x-1">
+                          <div className="w-4 h-4 rounded-full bg-white"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                          <div className="w-4 h-4 rounded-full bg-white/30"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6"
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 mt-8"
             >
               <motion.div 
                 whileHover={{ scale: 1.05 }}
@@ -1431,6 +1571,37 @@ function App() {
         </div>
       </section>
 
+      {/* Libro Section */}
+      <section id="libro" className="min-h-[40vh] py-20 px-4 bg-black flex items-center justify-center">
+        <div className="max-w-5xl w-full flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-16">
+          {/* Portada */}
+          <div className="w-full md:w-1/3 flex items-center justify-center">
+            <img
+              src="/images/portfolio/libro/portada.png"
+              alt="Portada EL DESPERTAR DE LAS ALMAS"
+              className="object-cover w-full h-72 max-w-xs rounded-lg shadow-lg"
+              style={{ background: '#222', objectFit: 'cover' }}
+              onError={e => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/240x320?text=Portada'; }}
+            />
+          </div>
+          {/* Info */}
+          <div className="w-full md:w-2/3 flex flex-col justify-center">
+            <h3 className="text-4xl font-bold pixel-text text-red-500 mb-2">EL DESPERTAR DE LAS ALMAS</h3>
+            <div className="text-gray-200 text-base mb-6">
+              <h4 className="font-bold text-red-500 mb-2">Sinopsis</h4>
+              <p>
+                En un mundo semifuturista, la ciudad de Nexópolis se erige como un refugio de paz y felicidad. Humanos y tecnología conviven en perfecta armonía, construyendo una sociedad próspera y avanzada.<br /><br />
+                Sin embargo, esa aparente estabilidad se ve abruptamente quebrada cuando fenómenos anormales comienzan a sacudir la ciudad: el suelo se resquebraja y el cielo, teñido de un ominoso rojo, se parte en dos.<br /><br />
+                De la hendidura celeste desciende un gigantesco ente, trayendo consigo caos y destrucción, y marcando el inicio de una nueva y aterradora era para los habitantes de Nexópolis.
+              </p>
+            </div>
+            <button className="pixel-button bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded transition-all duration-300 w-fit">
+              Leer próximamente
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contacto" className="min-h-screen relative py-20 px-4 bg-black">
         <div className="max-w-4xl mx-auto">
@@ -1448,7 +1619,7 @@ function App() {
             {/* Contact Form */}
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               className="bg-black/80 border-2 border-red-500 p-8 rounded-lg shadow-lg shadow-red-500/20"
             >
