@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { soundManager } from '../utils/soundManager';
+import { SOUNDS } from '../assets/sounds';
+import { FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 
 const SpaceGame = () => {
   const canvasRef = useRef(null);
@@ -46,6 +49,7 @@ const SpaceGame = () => {
     const saved = localStorage.getItem("highScores");
     return saved ? JSON.parse(saved) : [];
   });
+  const [isMuted, setIsMuted] = useState(false);
 
   const characters = {
     astronaut: {
@@ -160,6 +164,27 @@ const SpaceGame = () => {
     ]
   };
 
+  // Cargar sonidos al iniciar
+  useEffect(() => {
+    soundManager.loadSound('menu-music', SOUNDS.MENU_MUSIC);
+    soundManager.loadSound('game-music', SOUNDS.GAME_MUSIC);
+    soundManager.loadSound('hit', SOUNDS.HIT);
+    soundManager.loadSound('collect', SOUNDS.COLLECT);
+    soundManager.loadSound('game-over', SOUNDS.GAME_OVER);
+    soundManager.loadSound('victory', SOUNDS.VICTORY);
+    soundManager.loadSound('button-click', SOUNDS.BUTTON_CLICK);
+    soundManager.loadSound('menu-select', SOUNDS.MENU_SELECT);
+
+    // Reproducir música del menú
+    soundManager.playLoop('menu-music');
+
+    // Limpiar sonidos al desmontar
+    return () => {
+      soundManager.stop('menu-music');
+      soundManager.stop('game-music');
+    };
+  }, []);
+
   // Handle keyboard input
   const handleKeyDown = useCallback((e) => {
     if (!gameStarted || isDestroyed) return;
@@ -211,6 +236,7 @@ const SpaceGame = () => {
     });
 
     gameState.lastShot = now;
+    soundManager.play('hit'); // Sonido de disparo
   }, [isDestroyed]);
 
   // Check collisions
@@ -260,6 +286,7 @@ const SpaceGame = () => {
           }[asteroid.size];
           
           setScore(prev => prev + points);
+          soundManager.play('collect'); // Sonido de recolección
           return false;
         }
         return true;
@@ -305,6 +332,7 @@ const SpaceGame = () => {
 
         triggerSlowMotion();
         setDeathFlash(true);
+        soundManager.play('game-over'); // Sonido de game over
 
         setTimeout(() => {
           setGameOver(true);
@@ -885,8 +913,59 @@ const SpaceGame = () => {
     }
   };
 
+  // Reproducir música del juego al iniciar
+  useEffect(() => {
+    if (gameStarted && !gameOver) {
+      soundManager.stop('menu-music');
+      soundManager.playLoop('game-music');
+    } else if (gameOver) {
+      soundManager.stop('game-music');
+      soundManager.playLoop('menu-music');
+    }
+  }, [gameStarted, gameOver]);
+
+  // Reproducir sonido de botón
+  const handleButtonClick = () => {
+    soundManager.play('button-click');
+  };
+
+  // Función para alternar el mute
+  const toggleMute = useCallback(() => {
+    setIsMuted(prev => {
+      const newMuted = !prev;
+      if (newMuted) {
+        soundManager.muteAll();
+      } else {
+        soundManager.unmuteAll();
+        // Reproducir el sonido apropiado según el estado del juego
+        if (gameStarted && !gameOver) {
+          soundManager.stop('menu-music');
+          soundManager.playLoop('game-music');
+        } else {
+          soundManager.stop('game-music');
+          soundManager.playLoop('menu-music');
+        }
+      }
+      return newMuted;
+    });
+  }, [gameStarted, gameOver]);
+
   return (
     <div className="relative">
+      {/* Botón de mute */}
+      <motion.button
+        onClick={toggleMute}
+        className="absolute top-4 right-4 z-50 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        {isMuted ? (
+          <FaVolumeMute className="text-white text-xl" />
+        ) : (
+          <FaVolumeUp className="text-white text-xl" />
+        )}
+      </motion.button>
+
       <canvas
         ref={canvasRef}
         width={400}
@@ -981,7 +1060,10 @@ const SpaceGame = () => {
                       maxLength={15}
                     />
                     <motion.button
-                      onClick={handleSaveScore}
+                      onClick={() => {
+                        handleButtonClick();
+                        handleSaveScore();
+                      }}
                       className="pixel-button px-6 py-2 bg-red-600"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -993,6 +1075,7 @@ const SpaceGame = () => {
               ) : (
                 <motion.button
                   onClick={() => {
+                    handleButtonClick();
                     setGameStarted(true);
                     setGameOver(false);
                     setScore(0);
@@ -1022,36 +1105,6 @@ const SpaceGame = () => {
                   />
                 </motion.button>
               )}
-              <motion.button
-                onClick={() => {
-                  setGameStarted(true);
-                  setGameOver(false);
-                  setScore(0);
-                }}
-                className="pixel-button px-8 py-4 relative overflow-hidden text-lg"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                animate={{
-                  boxShadow: [
-                    '0 0 5px #ff0000',
-                    '0 0 20px #ff0000',
-                    '0 0 5px #ff0000'
-                  ]
-                }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                <span className="relative z-10">
-                  {gameOver ? 'JUGAR DE NUEVO' : 'COMENZAR'}
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-red-500/20"
-                  animate={{
-                    x: ['-100%', '100%'],
-                    opacity: [0, 0.5, 0]
-                  }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                />
-              </motion.button>
               <p className="text-sm pixel-text text-[#bbbbbb] mt-6 text-center">
                 Usa las flechas ← → para moverte horizontalmente<br/>
                 Usa las flechas ↑ ↓ para moverte verticalmente<br/>

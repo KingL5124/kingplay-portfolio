@@ -21,6 +21,11 @@ import paisaje1 from './assets/images/portfolio/paisaje/Paisaje 01.png';
 import tropipanLogotipo from './assets/images/portfolio/producto/Tropipan_logotipo.png';
 import productoPDF from './assets/images/portfolio/producto/Producto 01.pdf';
 import profilePhoto from './assets/images/profile/profile-photo.png';
+import nuevaImagen1 from './assets/images/novela/nueva-imagen1.png';
+import nuevaImagen2 from './assets/images/novela/nueva-imagen2.png';
+import nuevaImagen3 from './assets/images/novela/nueva-imagen3.png';
+import nuevaImagen4 from './assets/images/novela/nueva-imagen4.png';
+import nuevaImagen5 from './assets/images/novela/nueva-imagen5.png';
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,6 +51,8 @@ function App() {
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNovelaModalOpen, setIsNovelaModalOpen] = useState(false);
+  const [selectedNovelaImage, setSelectedNovelaImage] = useState(null);
 
   // Form validation
   const validateField = (name, value) => {
@@ -139,7 +146,7 @@ function App() {
       image: tarjeta1,
       description: 'Diseño de tarjeta de presentación personal',
       details: {
-        fecha: '2024',
+        fecha: '2025',
         herramientas: ['Photoshop', 'Illustrator'],
         descripcionLarga: 'Una descripción más detallada del proyecto...'
       }
@@ -151,7 +158,7 @@ function App() {
       image: tarjeta2,
       description: 'Diseño alternativo de tarjeta de presentación',
       details: {
-        fecha: '2024',
+        fecha: '2025',
         herramientas: ['Photoshop', 'Illustrator'],
         descripcionLarga: 'Una descripción más detallada del proyecto...'
       }
@@ -164,7 +171,7 @@ function App() {
       image: escenario1,
       description: 'Escenario 2D con iluminación semi-realista',
       details: {
-        fecha: '2024',
+        fecha: '2023',
         herramientas: ['Illustrator', 'Photoshop'],
         descripcionLarga: 'Diseño de escenario simple con un enfoque en la iluminación semi-realista, combinando técnicas de ilustración vectorial y edición digital.'
       }
@@ -177,7 +184,7 @@ function App() {
       image: personaje1,
       description: 'Diseño de personaje inspirado en Blue Lock',
       details: {
-        fecha: '2024',
+        fecha: '2023',
         herramientas: ['Illustrator', 'Photoshop'],
         descripcionLarga: 'Diseño de personaje inspirado en el estilo visual del anime/manga Blue Lock, adaptando sus características distintivas y estética única.'
       }
@@ -190,43 +197,31 @@ function App() {
       image: logo1,
       description: 'Diseño de logo para canal de gaming',
       details: {
-        fecha: '2024',
+        fecha: '2022',
         herramientas: ['Illustrator', 'Photoshop'],
         descripcionLarga: 'Logotipo diseñado específicamente para un canal de contenido gaming, incorporando elementos visuales que reflejan la temática de videojuegos.'
       }
     },
     {
       id: 'logo-2',
-      title: 'Logo Gaming Alternativo',
+      title: 'Logo Gaming Nuevo',
       category: 'logotipos',
       image: logo2,
       description: 'Segundo diseño para canal gaming',
       details: {
-        fecha: '2024',
+        fecha: '2025',
         herramientas: ['Illustrator', 'Photoshop'],
         descripcionLarga: 'Propuesta alternativa de logotipo para canal de gaming, con un enfoque diferente pero manteniendo la esencia del contenido de videojuegos.'
       }
     },
     {
       id: 'logo-3',
-      title: 'Logo Canal Podcast',
-      category: 'logotipos',
-      image: logo3,
-      description: 'Diseño de logo para canal de podcast',
-      details: {
-        fecha: '2024',
-        herramientas: ['Illustrator', 'Photoshop'],
-        descripcionLarga: 'Logotipo creado para un canal de podcast, diseñado para transmitir profesionalismo y la naturaleza auditiva del medio.'
-      }
-    },
-    {
-      id: 'logo-4',
       title: 'Logo Equipo EA',
       category: 'logotipos',
-      image: logo4,
+      image: logo3,
       description: 'Diseño de logo para equipo de EA',
       details: {
-        fecha: '2024',
+        fecha: '2025',
         herramientas: ['Illustrator', 'Photoshop'],
         descripcionLarga: 'Logotipo desarrollado para un equipo de EA, combinando elementos que representan la identidad del equipo y la marca EA.'
       }
@@ -252,7 +247,7 @@ function App() {
       image: retrato1,
       description: 'Retrato digital de personaje femenino',
       details: {
-        fecha: '2024',
+        fecha: '2023',
         herramientas: ['Illustrator'],
         descripcionLarga: 'Retrato digital de una chica creado exclusivamente en Illustrator, enfocado en capturar la esencia del personaje con un estilo vectorial.'
       }
@@ -264,7 +259,7 @@ function App() {
       image: retrato2,
       description: 'Retrato digital de personaje masculino',
       details: {
-        fecha: '2024',
+        fecha: '2023',
         herramientas: ['Illustrator'],
         descripcionLarga: 'Retrato digital de un personaje masculino realizado en Illustrator, demostrando versatilidad en el manejo de retratos vectoriales.'
       }
@@ -296,18 +291,6 @@ function App() {
         descripcionLarga: 'Diseño de producto creado por Alexis y King para la Fruta Pan Isleña, utilizando Adobe Illustrator y Photoshop para crear una identidad visual única y atractiva que representa la esencia de este producto tradicional.'
       }
     },
-    {
-      id: 'retratos-1',
-      title: 'Retrato Simple 1',
-      category: 'retratos',
-      image: retrato1,
-      description: 'Retrato digital de personaje femenino',
-      details: {
-        fecha: '2024',
-        herramientas: ['Illustrator'],
-        descripcionLarga: 'Retrato digital de una chica creado exclusivamente en Illustrator, enfocado en capturar la esencia del personaje con un estilo vectorial.'
-      }
-    }
   ];
 
   const chapters = [
@@ -1003,6 +986,101 @@ function App() {
         </div>
       </div>
     );
+  };
+
+  // Novela Gallery Section
+  const novelaImages = [
+    {
+      src: portadaNovela,
+      title: 'Portada de la Novela',
+      description: 'La portada oficial de la novela que representa el inicio de esta increíble historia.',
+      chapter: 'Portada'
+    },
+    {
+      src: nuevaImagen1,
+      title: 'Imagen 1',
+      description: 'Ciudad destruida bañada en sangre',
+      chapter: 'Capítulo 1'
+    },
+    {
+      src: nuevaImagen2,
+      title: 'Imagen 2',
+      description: 'Un espacio totalmente en blanco acompañado de un gran trono de cristal',
+      chapter: 'Capítulo 2'
+    },
+    {
+      src: nuevaImagen3,
+      title: 'Imagen 3',
+      description: 'Un bosque de fantasía',
+      chapter: 'Capítulo 3'
+    },
+    {
+      src: nuevaImagen4,
+      title: 'Imagen 4',
+      description: 'Una cueva llena de misterio y angustia',
+      chapter: 'Capítulo 4'
+    },
+    {
+      src: nuevaImagen5,
+      title: 'Imagen 5',
+      description: 'Un gran bosque con casas maravillosas',
+      chapter: 'Capítulo 5'
+    }
+  ];
+
+  // Novela Modal Component
+  const NovelaModal = ({ image, onClose }) => {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90" onClick={onClose}>
+        <motion.div
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          exit={{ scale: 0.8 }}
+          className="relative max-w-4xl w-full bg-black/95 p-4 rounded-lg pixel-border"
+          onClick={e => e.stopPropagation()}
+        >
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-white hover:text-red-500 transition-colors"
+          >
+            <FaTimes className="text-2xl" />
+          </button>
+          
+          <div className="relative aspect-video mb-4">
+            <img
+              src={image.src}
+              alt={image.title}
+              className="w-full h-full object-contain"
+            />
+          </div>
+          
+          <div className="text-white">
+            <h3 className="text-2xl font-bold pixel-text text-red-500 mb-2">
+              {image.title}
+            </h3>
+            <p className="text-gray-300 mb-4">
+              {image.description}
+            </p>
+            {image.chapter && (
+              <p className="text-sm text-gray-400">
+                Capítulo: {image.chapter}
+              </p>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    );
+  };
+
+  // Funciones para el modal de la novela
+  const openNovelaModal = (image) => {
+    setSelectedNovelaImage(image);
+    setIsNovelaModalOpen(true);
+  };
+
+  const closeNovelaModal = () => {
+    setIsNovelaModalOpen(false);
+    setSelectedNovelaImage(null);
   };
 
   return (
@@ -1732,6 +1810,67 @@ function App() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Novela Gallery Section */}
+      <section id="novela-gallery" className="min-h-screen relative py-20 px-4 bg-black/90">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <FaBookOpen className="section-icon" />
+            <h2 className="text-4xl font-bold pixel-text text-red-500 mb-8">Galería de la Novela</h2>
+            <p className="text-gray-300 max-w-2xl mx-auto mb-8">
+              Explora las ilustraciones y momentos más destacados de la novela. Cada imagen cuenta una parte de la historia.
+            </p>
+          </motion.div>
+
+          {/* Gallery Grid */}
+          <motion.div 
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            <AnimatePresence>
+              {novelaImages.map((image, index) => (
+                <motion.div
+                  key={index}
+                  layout
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  whileHover={{ scale: 1.05, zIndex: 1 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={() => openNovelaModal(image)}
+                  className="cursor-pointer"
+                >
+                  <div className="relative overflow-hidden rounded-lg pixel-border aspect-video bg-black">
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                        <h3 className="text-lg font-bold pixel-text">{image.title}</h3>
+                        <p className="text-sm text-gray-300">{image.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Novela Modal */}
+          <AnimatePresence>
+            {isNovelaModalOpen && selectedNovelaImage && (
+              <NovelaModal image={selectedNovelaImage} onClose={closeNovelaModal} />
+            )}
+          </AnimatePresence>
         </div>
       </section>
     </div>
